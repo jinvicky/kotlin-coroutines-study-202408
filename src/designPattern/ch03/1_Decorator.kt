@@ -51,3 +51,24 @@ class ValidatingAdd(private val repository: StarTrekRepository) : StarTrekReposi
         repository[starshipName] = captainName
     }
 }
+
+
+open class TrekRepository {
+    private val starshipCaptains = mutableMapOf("USS 엔터프라이즈" to "장뤽 피카드")
+
+    open fun getCaptain(starshipName: String): String {
+        return starshipCaptains[starshipName] ?: "알 수 없음"
+    }
+
+    open fun addCaptain(starshipName: String, captainName: String) {
+        starshipCaptains[starshipName] = captainName
+    }
+}
+
+// wrong example in book
+class BadChildTrekRepository  : TrekRepository() {
+    override fun getCaptain(starshipName: String): String {
+        println("$starshipName 함선의 선장을 조회 중입니다.")
+        return super.getCaptain(starshipName)
+    }
+}
